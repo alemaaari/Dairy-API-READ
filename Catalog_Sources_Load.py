@@ -7,20 +7,30 @@ import sqlalchemy as sq
 
 def main():
     try:
-        engine=sq.create_engine('postgresql://postgres:abhi#789@localhost:4444/postgres')
+        db=pd.read_csv('dbconfig.csv')
+        for line,row in db.iterrows():
+            username=row['username']
+            password=row['password']
+            server=row['server']
+            port=row['port']
+            dbname=row['dbname']
+        
+        engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
+        
         con=engine.connect()
-        query='select * from authentication'
+        query='select * from apiconfig where id=3'
         auth=pd.read_sql(query,engine)
         for i,j in auth.iterrows():
             user=str(j['username'])
             pwd=str(j['pwd'])
+            endpoint=str(j['endpoint'])
          
         truncquery='truncate table public.catalog_sources'
         con.execute(truncquery)
         top=5000
         skip=0
         while(1==1):
-            url='http://udmdirect.dairymarkets.com/Universal/UDM_Catalog_Sources?$top='+str(top)+'&$skip='+str(skip)+''
+            url=''+str(endpoint)+'?$top='+str(top)+'&$skip='+str(skip)+''
             col='SourceID,ReportID,SourceName,LastModified,Active'
             col=col.split(',')
             res=requests.get(url,auth=(user,pwd))
