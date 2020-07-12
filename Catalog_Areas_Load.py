@@ -4,35 +4,28 @@ import pandas as pd
 import json
 import sqlalchemy as sq
 
-def main():
+from util import (
+    get_api_configurations,
+    get_data_from_dataabse_for_sql,
+)
+
+
+def load_dimension_data(dimension_name, table_name):
     try:
-        db=pd.read_csv('dbconfig.csv')
-        for line,row in db.iterrows():
-            username=row['username']
-            password=row['password']
-            server=row['server']
-            port=row['port']
-            dbname=row['dbname']
-        
-        engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
-        con=engine.connect()
-        query='select * from apiconfig where id=1'
-        auth=pd.read_sql(query,engine)
-        for i,j in auth.iterrows():
-            user=str(j['username'])
-            pwd=str(j['pwd'])
-            endpoint=str(j['endpoint'])
-        truncquery='truncate table public.catalog_areas'
-        con.execute(truncquery)
-        top=5000
-        skip=0
+        username, password, api_endpoint = get_api_configurations()
 
-        while(1==1):
+        truncate_query = f"truncate table {table_name}"
+        df_dummy = get_data_from_dataabse_for_sql(truncate_query)
 
-            url=''+str(endpoint)+'?$top='+str(top)+'&$skip='+str(skip)+''
-            col='AreaID,AreaName,AreaNameTranslated,AreaNameCode,AreaDescription,LastModified,Active'
-            col=col.split(',')
-            res=requests.get(url,auth=(user,pwd))
+        top = 5000
+        skip = 0
+
+        while 1 == 1:
+
+            url = ''+str(api_endpoint)+'?$top='+str(top)+'&$skip='+str(skip)+''
+            col = 'AreaID,AreaName,AreaNameTranslated,AreaNameCode,AreaDescription,LastModified,Active'
+            col = col.split(',')
+            res = requests.get(url, auth=(username, password))
            
             print(url)
             data=res.json()
