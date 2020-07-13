@@ -134,7 +134,45 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
         tb=sys.exc_info()[2]
         print("An error occured on line"+str(tb.tb_lineno))
         
+def dbconnection():
+    db=pd.read_csv('dbconfig.csv')
+    for line,row in db.iterrows():
+        username=row['username']
+        password=row['password']
+        server=row['server']
+        port=row['port']
+        dbname=row['dbname']
+    engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
+    con=engine.connect()
+    return con,engine
+def apiconfig(engine):
+    query='select * from apiconfig where id=4'
+    auth=pd.read_sql(query,engine)
+    for i,j in auth.iterrows():
+        user=str(j['username'])
+        pwd=str(j['pwd'])
+        endpoint=str(j['endpoint'])
+    return user,pwd,endpoint
+def execonfig(con,engine,endpoint,user,pwd,logger):
+    query='select * from execonfig where "isActive"=1 order by "rowid"'
+    configdf=pd.read_sql(query,engine)
+    if configdf.empty:
+        print("No Active record to read")
+    for p,q in configdf.iterrows():
+        seriesid=q['SeriesID']
+        rowid=q['rowid']
+        areaid=q['AreaID']
+        lastmodified=q['LastModified']
         
+        nlastmodified=lastmodified
+        if lastmodified is None or lastmodified is pd.NaT:
+            lastmodified='2014-01-01 00:00:00'
+
+        print('*************************************')
+        logger.info('*************************************')
+        logger.info('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
+        print('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
+        apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con,user,pwd)
 def main():
     try:
         ddate=datetime.datetime.now().strftime("%Y-%m-%d")
@@ -146,41 +184,10 @@ def main():
         formatter=logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         fh.setFormatter(formatter)
         logger.addHandler(fh)
-        db=pd.read_csv('dbconfig.csv')
-        for line,row in db.iterrows():
-            username=row['username']
-            password=row['password']
-            server=row['server']
-            port=row['port']
-            dbname=row['dbname']
-        engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
-        con=engine.connect()
-        query='select * from apiconfig where id=4'
-        auth=pd.read_sql(query,engine)
-        for i,j in auth.iterrows():
-            user=str(j['username'])
-            pwd=str(j['pwd'])
-            endpoint=str(j['endpoint'])
+        con,engine=dbconnection()
+        user,pwd,endpoint=apiconfig(engine)
         
-        query='select * from execonfig where "isActive"=1 order by "rowid"'
-        configdf=pd.read_sql(query,engine)
-        if configdf.empty:
-            print("No Active record to read")
-        for p,q in configdf.iterrows():
-            seriesid=q['SeriesID']
-            rowid=q['rowid']
-            areaid=q['AreaID']
-            lastmodified=q['LastModified']
-            
-            nlastmodified=lastmodified
-            if lastmodified is None or lastmodified is pd.NaT:
-                lastmodified='2014-01-01 00:00:00'
-
-            print('*************************************')
-            logger.info('*************************************')
-            logger.info('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
-            print('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
-            apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con,user,pwd)
+        execonfig(con,engine,endpoint,user,pwd,logger)
             
         
     except Exception as e:
