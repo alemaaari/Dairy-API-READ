@@ -1,6 +1,6 @@
 -- Table: public.catalog_series
 
-DROP TABLE public.catalog_series;
+DROP TABLE IF EXISTS public.catalog_series;
 
 CREATE TABLE public.catalog_series
 (

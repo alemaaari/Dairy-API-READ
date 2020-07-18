@@ -1,6 +1,6 @@
 -- Table: public.catalog_areas
 
-DROP TABLE public.catalog_areas;
+DROP TABLE IF EXISTS public.catalog_areas;
 
 CREATE TABLE public.catalog_areas
 (

@@ -1,6 +1,6 @@
 -- Table: public.execonfig
 
--- DROP TABLE public.execonfig;
+ DROP TABLE IF EXISTS public.execonfig;
 
 CREATE TABLE public.execonfig
 (

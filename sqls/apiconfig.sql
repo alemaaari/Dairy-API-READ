@@ -1,6 +1,4 @@
--- Table: public.authentication
-
- DROP TABLE public.authentication;
+DROP TABLE IF EXISTS public.apiconfig;
 
 CREATE TABLE public.apiconfig
 (	id integer,
