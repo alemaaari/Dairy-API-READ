@@ -1,39 +1,33 @@
 import requests
-
 import time
 import pandas as pd
 import json
+import sys
 import sqlalchemy as sq
 
-def main():
+from util import (
+    get_api_configurations,
+    push_to_database,
+    insert_data_to_database
+)
+
+
+def load_dimension_data(username, password, api_endpoint,tablename):
     try:
-        db=pd.read_csv('dbconfig.csv')
-        for line,row in db.iterrows():
-            username=row['username']
-            password=row['password']
-            server=row['server']
-            port=row['port']
-            dbname=row['dbname']
         
-        engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
+
+        truncate_query = f"truncate table {tablename}"
         
-        con=engine.connect()
-        query='select * from apiconfig where id=3'
-        auth=pd.read_sql(query,engine)
-        for i,j in auth.iterrows():
-            user=str(j['username'])
-            pwd=str(j['pwd'])
-            endpoint=str(j['endpoint'])
-         
-        truncquery='truncate table public.catalog_sources'
-        con.execute(truncquery)
-        top=5000
-        skip=0
-        while(1==1):
-            url=''+str(endpoint)+'?$top='+str(top)+'&$skip='+str(skip)+''
+        push_to_database(truncate_query)
+
+        top = 5000
+        skip = 0
+        
+        while 1==1 :
+            url=''+str(api_endpoint)+'?$top='+str(top)+'&$skip='+str(skip)+''
             col='SourceID,ReportID,SourceName,LastModified,Active'
             col=col.split(',')
-            res=requests.get(url,auth=(user,pwd))
+            res=requests.get(url,auth=(username,password))
            
             print(url)
             data=res.json()
@@ -45,18 +39,26 @@ def main():
                 df=pd.read_json(dv_data)
                 print(df)
                 for i,j in df.iterrows():
-                    for p in col:
-                        if p not in j:
+                    for colname in col:
+                        if colname not in j:
                             
-                            df[p]='null'
+                            df[colname]='null'
                 
-                df[col].to_sql('catalog_sources',engine,index=False,if_exists='append')
+
+                insert_data_to_database(df[col],tablename,'append')
             else:
                 break
             skip=skip+top
         
     except Exception as e:
         print(e)
+        tb=sys.exc_info()[2]
+        print("An error occured on line"+str(tb.tb_lineno))
+
+def main():
+    query='select * from apiconfig where id=3'
+    username, password, api_endpoint,tablename = get_api_configurations(query)
+    load_dimension_data(username, password, api_endpoint,tablename) 
     
 
 

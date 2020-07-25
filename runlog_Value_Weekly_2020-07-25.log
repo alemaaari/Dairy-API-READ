@@ -1,0 +1,104 @@
+2020-07-25 11:38:39,873 - __main__ - INFO - *************************************
+2020-07-25 11:38:39,889 - __main__ - INFO - Executing the code for RecordID 1 and SeriesID 62727and LastModifiedDate 2020-07-09 10:27:23.057000
+2020-07-25 11:38:39,898 - __main__ - INFO - =====================
+2020-07-25 11:38:39,902 - __main__ - INFO - Starting to read records for RecordID 1 and SeriesID 62727 for Batch 0
+2020-07-25 11:38:42,443 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 62727 AND LastModified gt 2020-07-09T10:27:23.057000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:38:42,564 - __main__ - INFO - Batch 0 read count 2
+2020-07-25 11:38:43,011 - __main__ - INFO - =====================
+2020-07-25 11:38:43,019 - __main__ - INFO - Starting to read records for RecordID 1 and SeriesID 62727 for Batch 1
+2020-07-25 11:38:44,626 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 62727 AND LastModified gt 2020-07-09T10:27:23.057000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:38:44,681 - __main__ - INFO - Total record read 2
+2020-07-25 11:38:54,696 - __main__ - INFO - Read complete for record 1 and SeriesID 62727
+2020-07-25 11:38:54,696 - __main__ - INFO - =====================
+2020-07-25 11:38:54,801 - __main__ - INFO - *************************************
+2020-07-25 11:38:54,801 - __main__ - INFO - Executing the code for RecordID 3 and SeriesID 1621and LastModifiedDate 2020-07-08 13:59:08.813000
+2020-07-25 11:38:54,821 - __main__ - INFO - =====================
+2020-07-25 11:38:54,829 - __main__ - INFO - Starting to read records for RecordID 3 and SeriesID 1621 for Batch 0
+2020-07-25 11:38:56,445 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1621 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:38:56,561 - __main__ - INFO - Batch 0 read count 10
+2020-07-25 11:38:57,331 - __main__ - INFO - =====================
+2020-07-25 11:38:57,339 - __main__ - INFO - Starting to read records for RecordID 3 and SeriesID 1621 for Batch 1
+2020-07-25 11:38:58,971 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1621 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:38:59,005 - __main__ - INFO - Total record read 10
+2020-07-25 11:39:09,018 - __main__ - INFO - Read complete for record 3 and SeriesID 1621
+2020-07-25 11:39:09,018 - __main__ - INFO - =====================
+2020-07-25 11:39:09,113 - __main__ - INFO - *************************************
+2020-07-25 11:39:09,114 - __main__ - INFO - Executing the code for RecordID 4 and SeriesID 1622and LastModifiedDate 2020-07-08 13:59:08.813000
+2020-07-25 11:39:09,136 - __main__ - INFO - =====================
+2020-07-25 11:39:09,144 - __main__ - INFO - Starting to read records for RecordID 4 and SeriesID 1622 for Batch 0
+2020-07-25 11:39:10,783 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1622 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:39:10,889 - __main__ - INFO - Batch 0 read count 10
+2020-07-25 11:39:11,624 - __main__ - INFO - =====================
+2020-07-25 11:39:11,633 - __main__ - INFO - Starting to read records for RecordID 4 and SeriesID 1622 for Batch 1
+2020-07-25 11:39:13,221 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1622 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:39:13,284 - __main__ - INFO - Total record read 10
+2020-07-25 11:39:23,298 - __main__ - INFO - Read complete for record 4 and SeriesID 1622
+2020-07-25 11:39:23,298 - __main__ - INFO - =====================
+2020-07-25 11:39:23,399 - __main__ - INFO - *************************************
+2020-07-25 11:39:23,399 - __main__ - INFO - Executing the code for RecordID 5 and SeriesID 1623and LastModifiedDate 2020-07-08 13:59:08.813000
+2020-07-25 11:39:23,421 - __main__ - INFO - =====================
+2020-07-25 11:39:23,429 - __main__ - INFO - Starting to read records for RecordID 5 and SeriesID 1623 for Batch 0
+2020-07-25 11:39:25,035 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1623 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:39:25,166 - __main__ - INFO - Batch 0 read count 10
+2020-07-25 11:39:25,833 - __main__ - INFO - =====================
+2020-07-25 11:39:25,841 - __main__ - INFO - Starting to read records for RecordID 5 and SeriesID 1623 for Batch 1
+2020-07-25 11:39:27,450 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1623 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:39:27,482 - __main__ - INFO - Total record read 10
+2020-07-25 11:39:37,490 - __main__ - INFO - Read complete for record 5 and SeriesID 1623
+2020-07-25 11:39:37,490 - __main__ - INFO - =====================
+2020-07-25 11:39:37,579 - __main__ - INFO - *************************************
+2020-07-25 11:39:37,579 - __main__ - INFO - Executing the code for RecordID 6 and SeriesID 1624and LastModifiedDate 2020-07-08 13:59:08.813000
+2020-07-25 11:39:37,599 - __main__ - INFO - =====================
+2020-07-25 11:39:37,606 - __main__ - INFO - Starting to read records for RecordID 6 and SeriesID 1624 for Batch 0
+2020-07-25 11:39:39,235 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1624 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:39:39,339 - __main__ - INFO - Batch 0 read count 10
+2020-07-25 11:39:40,163 - __main__ - INFO - =====================
+2020-07-25 11:39:40,171 - __main__ - INFO - Starting to read records for RecordID 6 and SeriesID 1624 for Batch 1
+2020-07-25 11:39:41,785 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1624 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:39:41,812 - __main__ - INFO - Total record read 10
+2020-07-25 11:39:51,821 - __main__ - INFO - Read complete for record 6 and SeriesID 1624
+2020-07-25 11:39:51,821 - __main__ - INFO - =====================
+2020-07-25 11:39:51,934 - __main__ - INFO - *************************************
+2020-07-25 11:39:51,935 - __main__ - INFO - Executing the code for RecordID 7 and SeriesID 1625and LastModifiedDate 2020-07-08 13:59:08.813000
+2020-07-25 11:39:51,956 - __main__ - INFO - =====================
+2020-07-25 11:39:51,964 - __main__ - INFO - Starting to read records for RecordID 7 and SeriesID 1625 for Batch 0
+2020-07-25 11:39:53,581 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1625 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:39:53,698 - __main__ - INFO - Batch 0 read count 10
+2020-07-25 11:39:54,433 - __main__ - INFO - =====================
+2020-07-25 11:39:54,442 - __main__ - INFO - Starting to read records for RecordID 7 and SeriesID 1625 for Batch 1
+2020-07-25 11:39:55,990 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=SeriesID eq 1625 AND LastModified gt 2020-07-08T13:59:08.813000Z &$top=2000&$skip=2000& $format=json
+2020-07-25 11:39:56,012 - __main__ - INFO - Total record read 10
+2020-07-25 11:40:06,022 - __main__ - INFO - Read complete for record 7 and SeriesID 1625
+2020-07-25 11:40:06,022 - __main__ - INFO - =====================
+2020-07-25 11:40:06,129 - __main__ - INFO - *************************************
+2020-07-25 11:40:06,129 - __main__ - INFO - Executing the code for RecordID 8 and SeriesID 62947and LastModifiedDate 2020-07-01 14:07:04.550000
+2020-07-25 11:40:06,149 - __main__ - INFO - =====================
+2020-07-25 11:40:06,157 - __main__ - INFO - Starting to read records for RecordID 8 and SeriesID 62947 for Batch 0
+2020-07-25 11:40:07,777 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=AreaID eq 1.0 AND SeriesID eq 62947AND LastModified gt 2020-07-01T14:07:04.550000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:40:07,803 - __main__ - INFO - Total record read 0
+2020-07-25 11:40:17,815 - __main__ - INFO - Read complete for record 8 and SeriesID 62947
+2020-07-25 11:40:17,815 - __main__ - INFO - =====================
+2020-07-25 11:40:17,916 - __main__ - INFO - *************************************
+2020-07-25 11:40:17,916 - __main__ - INFO - Executing the code for RecordID 10 and SeriesID 62948and LastModifiedDate 2020-07-01 14:07:04.557000
+2020-07-25 11:40:17,938 - __main__ - INFO - =====================
+2020-07-25 11:40:17,947 - __main__ - INFO - Starting to read records for RecordID 10 and SeriesID 62948 for Batch 0
+2020-07-25 11:40:19,618 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=AreaID eq 1.0 AND SeriesID eq 62948AND LastModified gt 2020-07-01T14:07:04.557000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:40:19,721 - __main__ - INFO - Total record read 0
+2020-07-25 11:40:29,738 - __main__ - INFO - Read complete for record 10 and SeriesID 62948
+2020-07-25 11:40:29,738 - __main__ - INFO - =====================
+2020-07-25 11:40:29,827 - __main__ - INFO - *************************************
+2020-07-25 11:40:29,827 - __main__ - INFO - Executing the code for RecordID 11 and SeriesID 62949and LastModifiedDate 2020-07-01 14:07:04.560000
+2020-07-25 11:40:29,849 - __main__ - INFO - =====================
+2020-07-25 11:40:29,858 - __main__ - INFO - Starting to read records for RecordID 11 and SeriesID 62949 for Batch 0
+2020-07-25 11:40:31,483 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=AreaID eq 1.0 AND SeriesID eq 62949AND LastModified gt 2020-07-01T14:07:04.560000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:40:31,505 - __main__ - INFO - Total record read 0
+2020-07-25 11:40:41,516 - __main__ - INFO - Read complete for record 11 and SeriesID 62949
+2020-07-25 11:40:41,516 - __main__ - INFO - =====================
+2020-07-25 11:40:41,611 - __main__ - INFO - *************************************
+2020-07-25 11:40:41,611 - __main__ - INFO - Executing the code for RecordID 12 and SeriesID 62950and LastModifiedDate 2020-07-01 14:07:04.563000
+2020-07-25 11:40:41,631 - __main__ - INFO - =====================
+2020-07-25 11:40:41,640 - __main__ - INFO - Starting to read records for RecordID 12 and SeriesID 62950 for Batch 0
+2020-07-25 11:40:43,276 - __main__ - INFO - http://data.commoditymarkets.com/SoleraAdvisors/Value_Weekly?$filter=AreaID eq 1.0 AND SeriesID eq 62950AND LastModified gt 2020-07-01T14:07:04.563000Z &$top=2000&$skip=0& $format=json
+2020-07-25 11:40:43,329 - __main__ - INFO - Total record read 0
+2020-07-25 11:40:53,346 - __main__ - INFO - Read complete for record 12 and SeriesID 62950
+2020-07-25 11:40:53,346 - __main__ - INFO - =====================
