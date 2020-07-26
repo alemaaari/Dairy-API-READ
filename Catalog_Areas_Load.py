@@ -2,20 +2,23 @@ import requests
 import time
 import pandas as pd
 import json
+import sys
 import sqlalchemy as sq
 
 from util import (
     get_api_configurations,
-    get_data_from_dataabse_for_sql,
+    push_to_database,
+    insert_data_to_database
 )
 
 
-def load_dimension_data(dimension_name, table_name):
+def load_dimension_data(username, password, api_endpoint,tablename):
     try:
-        username, password, api_endpoint = get_api_configurations()
+        
 
-        truncate_query = f"truncate table {table_name}"
-        df_dummy = get_data_from_dataabse_for_sql(truncate_query)
+        truncate_query = f"truncate table {tablename}"
+        
+        push_to_database(truncate_query)
 
         top = 5000
         skip = 0
@@ -36,14 +39,14 @@ def load_dimension_data(dimension_name, table_name):
                 df=pd.read_json(dv_data)
                 print(df)
                 for i,j in df.iterrows():
-                    for p in col:
-                        if p not in j:
+                    for colname in col:
+                        if colname not in j:
                             
-                            df[p]='null'
+                            df[colname]='null'
                 
                             
-                
-                df[col].to_sql('catalog_areas',engine,index=False,if_exists='append')
+
+                insert_data_to_database(df[col],tablename,'append')
             else:
                 break
 
@@ -51,9 +54,13 @@ def load_dimension_data(dimension_name, table_name):
         
     except Exception as e:
         print(e)
+        tb=sys.exc_info()[2]
+        print("An error occured on line"+str(tb.tb_lineno))
     
-
-    
+def main():
+    query='select * from apiconfig where id=1'
+    username, password, api_endpoint,tablename = get_api_configurations(query)
+    load_dimension_data(username, password, api_endpoint,tablename)
 
 if __name__=='__main__':
 

@@ -7,8 +7,14 @@ import logging
 import sqlalchemy as sq
 import datetime
 import math
+from util import (
+    get_api_configurations,
+    push_to_database,
+    get_data_from_database_for_sql
+    
+)
 
-def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con,user,pwd):
+def apiread(nlastmodified,lastmodified,api_endpoint,areaid,rowid,seriesid,logger,username,password):
     try:
         date=str(lastmodified).replace(' ','T')
         start=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -16,7 +22,7 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
         skip=0
         cnt=0
         num=0
-        while(1==1):
+        while 1==1 :
             print("=====================")
             logger.info("=====================")
             print('Starting to read records for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+' for Batch '+str(num))
@@ -24,17 +30,17 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
 
             if areaid is None or math.isnan(areaid):
                 
-                url=''+str(endpoint)+'?$filter=SeriesID eq '+str(seriesid)+' AND LastModified gt '+str(date)+'Z &$top='+str(top)+'&$skip='+str(skip)+'& $format=json'
+                url=''+str(api_endpoint)+'?$filter=SeriesID eq '+str(seriesid)+' AND LastModified gt '+str(date)+'Z &$top='+str(top)+'&$skip='+str(skip)+'& $format=json'
                 
             else:
                 
-                url=''+str(endpoint)+'?$filter=AreaID eq '+str(areaid)+' AND SeriesID eq '+str(seriesid)+'AND LastModified gt '+str(date)+'Z &$top='+str(top)+'&$skip='+str(skip)+'& $format=json'
+                url=''+str(api_endpoint)+'?$filter=AreaID eq '+str(areaid)+' AND SeriesID eq '+str(seriesid)+'AND LastModified gt '+str(date)+'Z &$top='+str(top)+'&$skip='+str(skip)+'& $format=json'
 
            
             col='RecordID,ProductID,SeriesID,AreaID,ReportPeriod,CollectionDate,WeekEnding,High,Low,Value,SourceID,LastModified,Active'
             col=col.split(',')
             print(url)
-            res=requests.get(url,auth=(user,pwd))
+            res=requests.get(url,auth=(username,password))
            
             
             logger.info(url)
@@ -43,8 +49,9 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
             
             if (len(result)>0):
                 uquery='update execonfig set "LastRunDate"="StartTime","LastRunStatus"="Status","Status"=''\'Running\''',"StartTime"= \''+str(start)+'\' where "rowid"= '+str(rowid)
-                
-                con.execute(uquery)
+
+                push_to_database(uquery)
+
 
                 dv_data=json.dumps(result)
                 df=pd.read_json(dv_data)
@@ -95,11 +102,12 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
 
                     query=query1+query2+query3
                     
+                    push_to_database(query)
 
-                    con.execute(query)
                 query='select max("LastModified")  from public.value_weekly where "RecordID"=\''+str(RecordID)+'\' and "SeriesID"=\''+str(SeriesID)+'\'and "ReportPeriod"=\''+str(ReportPeriod)+'\' and "AreaID"=\''+str(AreaID)+'\''
                 
-                udf=pd.read_sql(query,engine)
+
+                udf=get_data_from_database_for_sql(query)
                 for k,l in udf.iterrows():
                     nlastmodified=j['LastModified']
                     print(nlastmodified)
@@ -122,40 +130,23 @@ def apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con
         end=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         uquery='update execonfig set "Status"=''\'Successful\''',"isActive"=1,"EndTime"= \''+str(end)+'\',"LastModified"= \''+str(nlastmodified)+'\' where "rowid"= '+str(rowid)
-
-        con.execute(uquery)    
+        push_to_database(uquery)
+  
     except Exception as e:
         print('===Error Details===')
         print(e)
         end=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         uquery='update execonfig set "Status"=''\'Failed\''',"EndTime"= \''+str(end)+'\' where "rowid"= '+str(rowid)
-        
-        con.execute(uquery)
+        push_to_database(uquery)
+
         tb=sys.exc_info()[2]
         print("An error occured on line"+str(tb.tb_lineno))
         
-def dbconnection():
-    db=pd.read_csv('dbconfig.csv')
-    for line,row in db.iterrows():
-        username=row['username']
-        password=row['password']
-        server=row['server']
-        port=row['port']
-        dbname=row['dbname']
-    engine=sq.create_engine('postgresql://'+str(username)+':'+str(password)+'@'+str(server)+':'+str(port)+'/'+str(dbname)+'')
-    con=engine.connect()
-    return con,engine
-def apiconfig(engine):
-    query='select * from apiconfig where id=4'
-    auth=pd.read_sql(query,engine)
-    for i,j in auth.iterrows():
-        user=str(j['username'])
-        pwd=str(j['pwd'])
-        endpoint=str(j['endpoint'])
-    return user,pwd,endpoint
-def execonfig(con,engine,endpoint,user,pwd,logger):
+
+def execonfig(api_endpoint,username,password,logger):
     query='select * from execonfig where "isActive"=1 order by "rowid"'
-    configdf=pd.read_sql(query,engine)
+    configdf=get_data_from_database_for_sql(query)
+
     if configdf.empty:
         print("No Active record to read")
     for p,q in configdf.iterrows():
@@ -172,7 +163,7 @@ def execonfig(con,engine,endpoint,user,pwd,logger):
         logger.info('*************************************')
         logger.info('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
         print('Executing the code for RecordID '+str(rowid)+' and SeriesID '+str(seriesid)+'and LastModifiedDate '+str(lastmodified))
-        apiread(nlastmodified,lastmodified,endpoint,areaid,rowid,seriesid,logger,con,user,pwd)
+        apiread(nlastmodified,lastmodified,api_endpoint,areaid,rowid,seriesid,logger,username,password)
 def main():
     try:
         ddate=datetime.datetime.now().strftime("%Y-%m-%d")
@@ -184,10 +175,12 @@ def main():
         formatter=logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         fh.setFormatter(formatter)
         logger.addHandler(fh)
-        con,engine=dbconnection()
-        user,pwd,endpoint=apiconfig(engine)
+        query='select * from apiconfig where id=4'
+        username, password, api_endpoint,tablename = get_api_configurations(query)
         
-        execonfig(con,engine,endpoint,user,pwd,logger)
+
+        
+        execonfig(api_endpoint,username,password,logger)
             
         
     except Exception as e:
